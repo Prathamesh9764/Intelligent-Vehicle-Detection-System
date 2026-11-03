@@ -1,0 +1,64 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+*.egg
+.venv/
+venv/
+env/
+
+# Environment files
+.env
+backend/.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+
+# Uploaded media
+backend/media/*
+!backend/media/.gitkeep
+
+# YOLO models
+*.pt
+
+# Logs
+*.log
+
+# Build artifacts
+*.exe
+*.dll
+*.so
+*.dylib
+backend/.env
+
+backend/media/screenshots/
+highway-detection/assets/videos
+highway-detection/.env
+backend/.env
+
+backend/best.keras
+backend/config.py
+backend/license_plate.py
+backend/plate_config.yaml
+backend/test.py
+backend/tracker/
+
+highway-detection/vehicle_clips/
+highway-detection/models/best_old.keras
+highway-detection/models/plate_config_old.yaml
+info.txt
+
+highway-detection/models/best.keras
+speed_ocr.sql
