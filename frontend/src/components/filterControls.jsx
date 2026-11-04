@@ -1,22 +1,28 @@
 import { DatePicker, TimePicker, ConfigProvider } from "antd";
 import dayjs from "dayjs";
-import { Calendar } from "lucide-react";
+import { Calendar, Clock } from "lucide-react";
 import { useTheme, ANTD_LIGHT_THEME, ANTD_DARK_THEME } from "../context/ThemeContext";
 
 export { ANTD_LIGHT_THEME, ANTD_DARK_THEME };
 
 export function Field({ label, children, className = "" }) {
   return (
-    <div className={className}>
-      <label className="block text-[11px] text-slate-500 uppercase tracking-wide mb-1">{label}</label>
+    <div className={`space-y-1 ${className}`}>
+      {label && (
+        <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+          {label}
+        </label>
+      )}
       {children}
     </div>
   );
 }
 
-// Renders Start/End Date + Time as 2 separate pickers but still emits a
-// single combined "YYYY-MM-DDTHH:mm" string via onChange.
-export function SplitDateTime({ value, onChange, dateLabel, timeLabel, defaultTime }) {
+/**
+ * SplitDateTime: Renders Date + Time as two distinct pickers while emitting
+ * a unified "YYYY-MM-DDTHH:mm" format via onChange.
+ */
+export function SplitDateTime({ value, onChange, dateLabel, timeLabel, defaultTime = "00:00" }) {
   const { antdTheme } = useTheme();
   const dayjsValue = value ? dayjs(value, "YYYY-MM-DDTHH:mm") : null;
 
@@ -32,23 +38,24 @@ export function SplitDateTime({ value, onChange, dateLabel, timeLabel, defaultTi
 
   return (
     <ConfigProvider theme={antdTheme}>
-      <div className="flex gap-3">
-        <Field label={dateLabel} className="flex-1 min-w-0">
+      <div className="flex flex-row items-end gap-1.5 w-full">
+        <Field label={dateLabel} className="flex-1 min-w-[120px]">
           <DatePicker
             value={dayjsValue}
             onChange={handleDateChange}
             format="YYYY-MM-DD"
-            className="w-full"
-            suffixIcon={<Calendar size={14} className="text-slate-400" />}
+            className="w-full text-xs"
+            suffixIcon={<Calendar size={13} className="text-slate-400" />}
             allowClear
           />
         </Field>
-        <Field label={timeLabel} className="w-24 shrink-0">
+        <Field label={timeLabel} className="w-[90px] shrink-0">
           <TimePicker
             value={dayjsValue}
             onChange={handleTimeChange}
             format="HH:mm"
-            className="w-full"
+            className="w-full text-xs"
+            suffixIcon={<Clock size={13} className="text-slate-400" />}
             allowClear={false}
           />
         </Field>
