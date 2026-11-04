@@ -4,23 +4,68 @@ import { ANTD_DARK_THEME, ANTD_LIGHT_THEME } from "../theme/antdTokens";
 export { ANTD_DARK_THEME, ANTD_LIGHT_THEME };
 
 const ThemeContext = createContext({
+  mode: "dark",
+  themeMode: "dark",
   theme: "dark",
+  resolvedTheme: "dark",
   isDark: true,
   toggleTheme: () => {},
   setTheme: () => {},
+  setThemeMode: () => {},
   antdTheme: ANTD_DARK_THEME,
 });
 
-function getInitialTheme() {
-  const envDefault = import.meta.env.VITE_DEFAULT_THEME || import.meta.env.VITE_THEME;
-  if (envDefault === "dark" || envDefault === "light") {
-    return envDefault;
+function getInitialMode() {
+  try {
+    const saved = localStorage.getItem("theme") || localStorage.getItem("theme-mode");
+    if (saved === "dark" || saved === "light" || saved === "system") {
+      return saved;
+    }
+    const envDefault = import.meta.env.VITE_DEFAULT_THEME || import.meta.env.VITE_THEME;
+    if (envDefault === "dark" || envDefault === "light" || envDefault === "system") {
+      return envDefault;
+    }
+  } catch {
+    // localStorage may be unavailable in private browsing mode
   }
-  return "dark"; // Default to night (dark) theme
+  return "dark"; // Default theme is modern Dark Mode
+}
+
+function getSystemIsDark() {
+  if (typeof window === "undefined" || !window.matchMedia) return true;
+  return window.matchMedia("(prefers-color-scheme: dark)").matches;
 }
 
 export function ThemeProvider({ children }) {
-  const [theme, setThemeState] = useState(getInitialTheme);
+  const [mode, setModeState] = useState(getInitialMode);
+  const [systemIsDark, setSystemIsDark] = useState(getSystemIsDark);
+
+  // Listen for operating system theme changes
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const handleChange = (e) => {
+      setSystemIsDark(e.matches);
+    };
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener("change", handleChange);
+      return () => mediaQuery.removeEventListener("change", handleChange);
+    } else if (mediaQuery.addListener) {
+      mediaQuery.addListener(handleChange);
+      return () => mediaQuery.removeListener(handleChange);
+    }
+  }, []);
+
+  const resolvedTheme = useMemo(() => {
+    if (mode === "system") {
+      return systemIsDark ? "dark" : "light";
+    }
+    return mode;
+  }, [mode, systemIsDark]);
+
+  const isDark = resolvedTheme === "dark";
 
   const applyThemeToDOM = useCallback((currentTheme) => {
     const root = document.documentElement;
@@ -45,38 +90,47 @@ export function ThemeProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    applyThemeToDOM(theme);
+    applyThemeToDOM(resolvedTheme);
     try {
-      localStorage.setItem("app-theme", theme === "dark" ? "night" : "day");
-      localStorage.setItem("theme", theme);
+      localStorage.setItem("theme", mode);
+      localStorage.setItem("theme-mode", mode);
+      localStorage.setItem("app-theme", resolvedTheme === "dark" ? "night" : "day");
     } catch {
-      // storage unavailable in private browsing
+      // storage unavailable
     }
-  }, [theme, applyThemeToDOM]);
+  }, [mode, resolvedTheme, applyThemeToDOM]);
 
-  const toggleTheme = useCallback(() => {
-    setThemeState((prev) => (prev === "dark" ? "light" : "dark"));
+  const setThemeMode = useCallback((newMode) => {
+    if (newMode === "dark" || newMode === "light" || newMode === "system") {
+      setModeState(newMode);
+    }
   }, []);
 
-  const setTheme = useCallback((newTheme) => {
-    if (newTheme === "dark" || newTheme === "light") {
-      setThemeState(newTheme);
-    }
+  const toggleTheme = useCallback(() => {
+    setModeState((prev) => {
+      if (prev === "dark") return "light";
+      if (prev === "light") return "system";
+      return "dark";
+    });
   }, []);
 
   const antdThemeConfig = useMemo(() => {
-    return theme === "dark" ? ANTD_DARK_THEME : ANTD_LIGHT_THEME;
-  }, [theme]);
+    return isDark ? ANTD_DARK_THEME : ANTD_LIGHT_THEME;
+  }, [isDark]);
 
   const value = useMemo(
     () => ({
-      theme,
-      isDark: theme === "dark",
+      mode,
+      themeMode: mode,
+      theme: resolvedTheme,
+      resolvedTheme,
+      isDark,
       toggleTheme,
-      setTheme,
+      setTheme: setThemeMode,
+      setThemeMode,
       antdTheme: antdThemeConfig,
     }),
-    [theme, toggleTheme, setTheme, antdThemeConfig]
+    [mode, resolvedTheme, isDark, toggleTheme, setThemeMode, antdThemeConfig]
   );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;

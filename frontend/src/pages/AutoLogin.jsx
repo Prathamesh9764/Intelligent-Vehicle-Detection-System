@@ -1,20 +1,17 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { ScanLine, Loader2 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import client from "../api/client";
 import { DASHBOARD_KEEP_FLAG } from "../utils/filterStorage";
 
-// Date range to pre-filter the Dashboard when arriving via AutoLogin.
 const AUTO_LOGIN_DATE_FROM = "2026-09-21 00:00";
-const AUTO_LOGIN_DATE_TO   = "2026-09-22 23:59";
+const AUTO_LOGIN_DATE_TO = "2026-09-22 23:59";
 
 /**
  * AutoLogin — reads ?token= and ?user= from the URL,
- * stores them (same keys as the normal login flow) and updates the
- * AuthContext, then redirects to the dashboard without showing the login form.
- *
- * Used by the MoodScope Analytic Dashboard to auto-authenticate
- * when opening Speed OCR from the project card.
+ * auto-authenticates into Intelligent-Vehicle-Detection-System
+ * and redirects to the dashboard.
  */
 export default function AutoLogin() {
   const navigate = useNavigate();
@@ -49,17 +46,15 @@ export default function AutoLogin() {
       try {
         await client.get("/auth/me");
       } catch (err) {
-        // 401/403: interceptor already clears storage and redirects to /login
         if (err?.response?.status === 401 || err?.response?.status === 403) return;
       }
       if (active) {
-        // Set the keep-filters flag so Dashboard won't clear the URL params.
         sessionStorage.setItem(DASHBOARD_KEEP_FLAG, "1");
-        const params = new URLSearchParams({
+        const nextParams = new URLSearchParams({
           date_from: AUTO_LOGIN_DATE_FROM,
           date_to: AUTO_LOGIN_DATE_TO,
         });
-        navigate(`/?${params.toString()}`, { replace: true });
+        navigate(`/?${nextParams.toString()}`, { replace: true });
       }
     })();
 
@@ -69,10 +64,17 @@ export default function AutoLogin() {
   }, [navigate, signIn]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-asphalt-900">
-      <p className="text-slate-400 text-sm tracking-wide animate-pulse">
-        Authenticating…
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[#080c16] text-white p-4">
+      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/25 mb-3.5 animate-pulse">
+        <ScanLine className="text-white" size={24} />
+      </div>
+      <p className="font-display text-base font-bold text-shimmer-blue tracking-wide mb-1.5">
+        Intelligent-Vehicle-Detection-System
       </p>
+      <div className="flex items-center gap-2 text-xs text-slate-400 font-medium">
+        <Loader2 size={15} className="animate-spin text-cyan-400" />
+        <span>Authenticating remote telemetry session…</span>
+      </div>
     </div>
   );
 }

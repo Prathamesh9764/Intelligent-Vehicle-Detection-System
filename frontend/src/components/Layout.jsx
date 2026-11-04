@@ -12,17 +12,19 @@ import {
   BarChart3,
   Camera,
   RefreshCw,
+  Cpu,
 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import { DASHBOARD_KEEP_FLAG } from "../utils/filterStorage";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 const navItems = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard, end: true },
-  { to: "/live", label: "Live feed", icon: Radio },
-  { to: "/analysis", label: "Analysis", icon: BarChart3 },
-  { to: "/cameras", label: "Cameras", icon: Camera, viewerHidden: true },
-  { to: "/admin", label: "Users", icon: Users, adminOnly: true },
+  { to: "/live", label: "Live Feeds", icon: Radio },
+  { to: "/analysis", label: "Analytics", icon: BarChart3 },
+  { to: "/cameras", label: "Camera Nodes", icon: Camera, viewerHidden: true },
+  { to: "/admin", label: "Operators", icon: Users, adminOnly: true },
 ];
 
 export default function Layout({ children }) {
@@ -31,6 +33,7 @@ export default function Layout({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
     if (!location.pathname.startsWith("/vehicles/")) {
@@ -40,27 +43,34 @@ export default function Layout({ children }) {
 
   const closeSidebar = () => setSidebarOpen(false);
 
+  const handleRefresh = () => {
+    setIsRefreshing(true);
+    setTimeout(() => {
+      window.location.reload();
+    }, 200);
+  };
+
   return (
     <div
-      className={`min-h-screen relative flex overflow-x-hidden ${
-        isDark ? "theme-dark dark" : "theme-light"
+      className={`min-h-screen relative flex overflow-x-hidden transition-colors duration-250 ${
+        isDark ? "theme-dark dark bg-[#080c16]" : "theme-light bg-[#f8fafc]"
       }`}
     >
       {/* Ambient Glowing Nebula Orbs in Background */}
       <div
-        className="ambient-nebula-orb w-[500px] h-[500px] -top-32 -left-20 opacity-30 dark:opacity-25"
+        className="ambient-nebula-orb w-[460px] h-[460px] -top-32 -left-20 opacity-25 dark:opacity-20"
         style={{
           background: isDark
-            ? "radial-gradient(circle, #3b1d6e 0%, transparent 70%)"
-            : "radial-gradient(circle, #fef3c7 0%, transparent 70%)",
+            ? "radial-gradient(circle, #1e3a8a 0%, transparent 70%)"
+            : "radial-gradient(circle, #dbeafe 0%, transparent 70%)",
         }}
       />
       <div
-        className="ambient-nebula-orb w-[600px] h-[600px] -bottom-32 -right-20 opacity-30 dark:opacity-20"
+        className="ambient-nebula-orb w-[520px] h-[520px] -bottom-32 -right-20 opacity-25 dark:opacity-15"
         style={{
           background: isDark
-            ? "radial-gradient(circle, #0f3a4d 0%, transparent 70%)"
-            : "radial-gradient(circle, #fed7aa 0%, transparent 70%)",
+            ? "radial-gradient(circle, #0e7490 0%, transparent 70%)"
+            : "radial-gradient(circle, #cffafe 0%, transparent 70%)",
           animationDelay: "-8s",
         }}
       />
@@ -73,28 +83,28 @@ export default function Layout({ children }) {
         />
       )}
 
-      {/* Frosted Glass Sidebar */}
+      {/* Modern Charcoal/Navy Sidebar */}
       <aside
         className={`
-          fixed inset-y-0 left-0 z-40 w-64 flex flex-col transition-all duration-300 ease-in-out
+          fixed inset-y-0 left-0 z-40 w-56 sm:w-60 flex flex-col transition-all duration-300 ease-in-out
           lg:static lg:translate-x-0
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
-          border-r border-slate-200/80 dark:border-white/10
-          bg-white/90 dark:bg-[#0a0820]/90 backdrop-blur-xl shadow-xl lg:shadow-none
+          border-r border-slate-200/90 dark:border-cyan-500/15
+          bg-white/95 dark:bg-[#0b1120]/95 backdrop-blur-xl shadow-xl lg:shadow-none
         `}
       >
         {/* Brand Header */}
-        <div className="flex items-center justify-between px-6 py-6 border-b border-slate-200/80 dark:border-white/10">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 via-amber-600 to-teal-600 flex items-center justify-center shadow-md shadow-amber-500/25 shrink-0">
-              <ScanLine className="text-white" size={20} />
+        <div className="flex items-center justify-between px-4 py-3.5 border-b border-slate-200/80 dark:border-cyan-500/15">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 flex items-center justify-center shadow-md shadow-blue-500/25 shrink-0">
+              <ScanLine className="text-white" size={17} />
             </div>
-            <div>
-              <p className="font-display text-xl font-bold tracking-wider text-shimmer-gold leading-none">
-                SPEED·OCR
+            <div className="min-w-0">
+              <p className="font-display text-xs font-bold tracking-tight text-slate-900 dark:text-white leading-tight truncate">
+                IVDS Console
               </p>
-              <p className="text-[10px] text-slate-500 dark:text-indigo-200/70 tracking-widest uppercase font-semibold mt-1">
-                Enforcement Console
+              <p className="text-[9px] text-blue-600 dark:text-cyan-400 tracking-wider uppercase font-bold truncate">
+                Vehicle Detection
               </p>
             </div>
           </div>
@@ -103,12 +113,12 @@ export default function Layout({ children }) {
             className="lg:hidden text-slate-400 hover:text-slate-700 dark:hover:text-white p-1 rounded-lg"
             aria-label="Close menu"
           >
-            <X size={20} />
+            <X size={18} />
           </button>
         </div>
 
         {/* Navigation Items */}
-        <nav className="flex-1 px-3.5 py-6 space-y-1.5 overflow-y-auto">
+        <nav className="flex-1 px-2.5 py-4 space-y-1 overflow-y-auto">
           {navItems
             .filter((item) => !item.adminOnly || user?.role === "admin")
             .filter((item) => !item.viewerHidden || user?.role !== "viewer")
@@ -119,68 +129,89 @@ export default function Layout({ children }) {
                 end={end}
                 onClick={closeSidebar}
                 className={({ isActive }) =>
-                  `flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                  `flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-bold transition-all duration-150 ${
                     isActive
-                      ? "bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/30 font-bold"
-                      : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-white/5"
+                      ? "bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-md shadow-blue-500/25"
+                      : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-cyan-500/10"
                   }`
                 }
               >
-                <Icon size={18} />
-                <span>{label}</span>
+                <Icon size={16} className="shrink-0" />
+                <span className="truncate">{label}</span>
               </NavLink>
             ))}
         </nav>
+
+        {/* Sidebar Footer Node Badge */}
+        <div className="p-3 mx-2.5 mb-3 rounded-xl bg-slate-100/80 dark:bg-slate-900/60 border border-slate-200 dark:border-cyan-500/15 text-[11px]">
+          <div className="flex items-center justify-between font-semibold text-slate-600 dark:text-slate-300">
+            <span className="flex items-center gap-1.5 text-[10px]">
+              <Cpu size={13} className="text-cyan-500 shrink-0" />
+              <span>IVDS Node</span>
+            </span>
+            <span className="text-[9px] uppercase px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold">
+              v2.4 Online
+            </span>
+          </div>
+        </div>
       </aside>
 
-      {/* Main Canvas */}
+      {/* Main Content Area */}
       <main className="flex-1 min-w-0 flex flex-col relative z-10">
-        {/* Frosted Topbar */}
-        <header className="h-16 border-b border-slate-200/80 dark:border-white/10 flex items-center justify-between px-4 sm:px-6 lg:px-10 bg-white/70 dark:bg-[#0a0820]/70 backdrop-blur-xl shrink-0 sticky top-0 z-30">
-          <div className="flex items-center gap-3 min-w-0">
+        {/* Top Header Bar */}
+        <header className="h-14 border-b border-slate-200/90 dark:border-cyan-500/15 flex items-center justify-between px-3 sm:px-5 lg:px-6 bg-white/80 dark:bg-[#080c16]/80 backdrop-blur-xl shrink-0 sticky top-0 z-30 transition-colors">
+          <div className="flex items-center gap-2.5 min-w-0">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="lg:hidden text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white p-2 rounded-xl border border-slate-200/80 dark:border-white/10 bg-white/50 dark:bg-white/5 shrink-0"
-              aria-label="Open menu"
+              className="lg:hidden text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white p-1.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-white/5 shrink-0"
+              aria-label="Open navigation menu"
             >
-              <Menu size={18} />
+              <Menu size={16} />
             </button>
-            <div className="flex items-center gap-2 text-xs font-semibold min-w-0 text-slate-600 dark:text-slate-300">
+            <div className="flex items-center gap-2 text-xs font-semibold min-w-0 text-slate-700 dark:text-slate-300">
               <span className="radar-dot shrink-0" />
-              <Gauge size={14} className="text-teal-600 dark:text-teal-400 shrink-0" />
-              <span className="truncate hidden sm:inline">Traffic telemetry active</span>
+              <Gauge size={14} className="text-cyan-500 shrink-0" />
+              <span className="truncate font-bold hidden sm:inline text-xs">
+                Intelligent-Vehicle-Detection-System
+              </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-3 text-xs shrink-0">
-            {/* Refresh Button */}
+          <div className="flex items-center gap-2 sm:gap-2.5 text-xs shrink-0">
+            {/* Theme Mode Switcher */}
+            <ThemeSwitcher size="sm" />
+
+            {/* Refresh Console Button */}
             <button
-              onClick={() => location.reload()}
-              className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors p-2 rounded-xl border border-slate-200/80 dark:border-white/10 bg-white/50 dark:bg-white/5 hover:border-amber-500/40"
-              title="Refresh console"
+              onClick={handleRefresh}
+              className={`text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-all p-1.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-white/5 hover:border-cyan-500/40 ${
+                isRefreshing ? "animate-spin text-cyan-500" : ""
+              }`}
+              title="Refresh telemetry"
+              aria-label="Refresh telemetry"
             >
-              <RefreshCw size={14} />
+              <RefreshCw size={13} />
             </button>
 
             {/* Live Indicator Pill */}
-            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-teal-500/40 bg-teal-500/10 text-teal-700 dark:text-teal-300 text-[11px] font-bold tracking-wider">
-              <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse" />
+            <div className="hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold tracking-wider">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               <span>LIVE</span>
             </div>
 
             {/* Divider */}
-            <div className="h-5 w-px bg-slate-200 dark:bg-white/10 mx-0.5 sm:mx-1" />
+            <div className="h-4 w-px bg-slate-200 dark:bg-white/10 mx-0.5" />
 
-            {/* User Profile Info */}
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900/40 border border-amber-300/60 dark:border-amber-500/40 flex items-center justify-center text-amber-800 dark:text-amber-200 text-xs font-bold uppercase shrink-0 shadow-sm">
-                {user?.username?.slice(0, 2)}
+            {/* User Profile Badge */}
+            <div className="flex items-center gap-1.5">
+              <div className="w-7 h-7 rounded-lg bg-blue-600/15 dark:bg-cyan-500/15 border border-blue-500/30 dark:border-cyan-400/30 text-blue-600 dark:text-cyan-300 flex items-center justify-center text-[11px] font-bold uppercase shrink-0">
+                {user?.username?.slice(0, 2) || "OP"}
               </div>
-              <div className="hidden sm:block text-left leading-tight min-w-0">
-                <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 truncate max-w-[120px]">
+              <div className="hidden md:block text-left leading-tight min-w-0">
+                <p className="text-xs font-bold text-slate-900 dark:text-slate-100 truncate max-w-[110px]">
                   {user?.username}
                 </p>
-                <p className="text-[10px] text-slate-500 dark:text-indigo-200/70 uppercase tracking-wider font-bold">
+                <p className="text-[9px] text-slate-500 dark:text-cyan-400 uppercase tracking-wider font-semibold">
                   {user?.role}
                 </p>
               </div>
@@ -192,18 +223,19 @@ export default function Layout({ children }) {
                 logout();
                 navigate("/login");
               }}
-              className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-red-600 dark:text-slate-400 dark:hover:text-rose-400 transition-colors font-semibold p-2 sm:px-2.5 sm:py-1.5 rounded-xl border border-slate-200/80 dark:border-white/10 bg-white/50 dark:bg-white/5 hover:border-red-500/40 hover:bg-red-50/50 dark:hover:bg-rose-950/20 active:scale-95"
-              title="Sign out"
+              className="flex items-center gap-1 text-xs text-slate-500 hover:text-red-600 dark:text-slate-400 dark:hover:text-rose-400 transition-colors font-semibold p-1.5 sm:px-2 sm:py-1 rounded-lg border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-white/5 hover:border-red-500/30"
+              title="Sign out of console"
+              aria-label="Sign out"
             >
-              <LogOut size={14} />
+              <LogOut size={13} />
               <span className="hidden md:inline">Sign out</span>
             </button>
           </div>
         </header>
 
-        {/* Breathable Centered Container */}
-        <div className="flex-1 overflow-auto">
-          <div className="max-w-[1400px] mx-auto px-4 pb-16 pt-6 sm:px-6 lg:px-10 space-y-8">
+        {/* Main Viewport Container */}
+        <div className="flex-1 overflow-y-auto">
+          <div className="max-w-[1500px] mx-auto px-3 sm:px-5 lg:px-6 py-4 sm:py-5 space-y-4 sm:space-y-5">
             {children}
           </div>
         </div>

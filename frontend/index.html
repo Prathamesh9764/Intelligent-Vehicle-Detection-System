@@ -2,12 +2,39 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.svg" />
+    <meta name="theme-color" content="#080c16" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Speed OCR · Enforcement Console</title>
+    <title>Intelligent-Vehicle-Detection-System · Enforcement Console</title>
+    <!-- Prevent theme flickering before paint -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme");
+          var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var isDark = stored === "dark" || (!stored && true) || (stored === "system" && prefersDark);
+          if (stored === "light") {
+            isDark = false;
+          }
+          var root = document.documentElement;
+          if (isDark) {
+            root.classList.add("theme-dark", "dark");
+            root.classList.remove("theme-light");
+            root.setAttribute("data-theme", "night");
+            root.style.colorScheme = "dark";
+          } else {
+            root.classList.add("theme-light");
+            root.classList.remove("theme-dark", "dark");
+            root.setAttribute("data-theme", "day");
+            root.style.colorScheme = "light";
+          }
+        } catch (e) {}
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Outfit:wght@400;500;600;700&family=Rozha+One&family=Sora:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Outfit:wght@400;500;600;700&family=Rozha+One&family=Sora:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
     <div id="root"></div>

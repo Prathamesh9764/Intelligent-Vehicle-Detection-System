@@ -1,4 +1,4 @@
-# Speed OCR — Enforcement Console
+# Intelligent-Vehicle-Detection-System — Enforcement Console
 
 Full-stack app on top of your existing `speed_ocr` Postgres schema (`users`, `vehicle_data`).
 
