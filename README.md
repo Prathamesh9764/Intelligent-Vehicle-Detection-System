@@ -6,15 +6,13 @@
 
 ## System Demonstration
 
-Watch the system in action below:
-
 <div align="center">
-  <video src="frontend/public/demo_speed_ocr.mp4" controls="controls" width="100%" style="max-height: 540px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
-    Your browser does not support the video tag.
-  </video>
+  <a href="frontend/public/demo_speed_ocr.mp4">
+    <img src="frontend/public/demo_preview.gif" alt="Intelligent-Vehicle-Detection-System Live Demonstration" width="100%" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.35);" />
+  </a>
   <p align="center">
     <a href="frontend/public/demo_speed_ocr.mp4">
-      <b>▶ Click here to view / download the demo video (demo_speed_ocr.mp4)</b>
+      <b>▶ Click the animation above to view / download the full 1080p demo video (demo_speed_ocr.mp4)</b>
     </a>
   </p>
 </div>
