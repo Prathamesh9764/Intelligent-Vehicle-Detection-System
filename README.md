@@ -123,9 +123,3 @@ print(response.json())
 ```
 The console immediately ingests the detection, triggers compliance evaluation, and broadcasts the event over WebSocket to all active operator consoles.
 
----
-
-## 5. Deployment Branches
-
-- **`gate_dev4.1`**: Single RTSP stream deployment without Redis dependency.
-- **`gate_dev5`**: Multi-camera RTSP ingestion cluster powered by Redis message broker and distributed pipeline workers.
