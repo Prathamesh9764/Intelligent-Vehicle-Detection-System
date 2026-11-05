@@ -38,8 +38,8 @@ export function SplitDateTime({ value, onChange, dateLabel, timeLabel, defaultTi
 
   return (
     <ConfigProvider theme={antdTheme}>
-      <div className="flex flex-row items-end gap-1.5 w-full">
-        <Field label={dateLabel} className="flex-1 min-w-[120px]">
+      <div className="flex flex-row items-end gap-2 w-full min-w-0">
+        <Field label={dateLabel} className="flex-1 min-w-0">
           <DatePicker
             value={dayjsValue}
             onChange={handleDateChange}
@@ -49,7 +49,7 @@ export function SplitDateTime({ value, onChange, dateLabel, timeLabel, defaultTi
             allowClear
           />
         </Field>
-        <Field label={timeLabel} className="w-[90px] shrink-0">
+        <Field label={timeLabel} className="w-[88px] sm:w-[94px] shrink-0">
           <TimePicker
             value={dayjsValue}
             onChange={handleTimeChange}

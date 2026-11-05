@@ -1,12 +1,42 @@
 # Intelligent-Vehicle-Detection-System — Enforcement Console
 
-Full-stack app on top of your existing `speed_ocr` Postgres schema (`users`, `vehicle_data`).
+> Modern, AI-powered traffic surveillance, optical character recognition (ANPR), and automated speed violation enforcement console.
 
-- **backend/** — FastAPI (Python), talks directly to your existing tables, no migrations needed.
-- **frontend/** — React (Vite) console: login, dashboard with filters, capture detail (images + edit),
-  live feed (WebSocket), and user admin.
+---
 
-## 1. Backend setup
+## System Demonstration
+
+Watch the system in action below:
+
+<div align="center">
+  <video src="frontend/public/demo_speed_ocr.mp4" controls="controls" width="100%" style="max-height: 540px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+    Your browser does not support the video tag.
+  </video>
+  <p align="center">
+    <a href="frontend/public/demo_speed_ocr.mp4">
+      <b>▶ Click here to view / download the demo video (demo_speed_ocr.mp4)</b>
+    </a>
+  </p>
+</div>
+
+---
+
+## Overview
+
+The **Intelligent-Vehicle-Detection-System (IVDS)** is a full-stack production application built on top of the PostgreSQL schema (`users`, `vehicle_data`):
+
+- **Backend (`backend/`)** — High-performance FastAPI (Python 3.11+) service with JWT authentication, WebSocket real-time broadcast, automated speed violation calculation, and RESTful APIs.
+- **Frontend (`frontend/`)** — React 19 + Vite console featuring:
+  - **Dynamic Theme Management**: 3-way toggle (**Light**, **Dark**, **System Mode**) with zero-flicker localStorage persistence.
+  - **Full-Screen AI Vision Login**: Immersive 3D perspective highway simulation, real-time multi-vehicle tracking, optical laser ANPR scanner, and rotating Doppler radar.
+  - **Collapsible Telemetry Filters**: Responsive click-to-expand/collapse filter deck with upward and downward indicators.
+  - **Sign-Out Confirmation**: Protective modal dialog to prevent accidental session termination.
+  - **Route & Page Transition Loader**: Dual-tier loading using NProgress glowing progress bar and code-split Suspense fallbacks.
+  - **Live Camera Feeds**: Low-latency WebSocket streaming, ROI calibration, and speed zone management.
+
+---
+
+## 1. Backend Setup
 
 ```bash
 cd backend
@@ -14,54 +44,88 @@ python3 -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
 
 cp .env.example .env
-# edit .env: set DATABASE_URL to your real speed_ocr connection string, and a real SECRET_KEY
+# Edit .env: Set DATABASE_URL to your PostgreSQL connection string, and a secure SECRET_KEY
 
-# create the first admin login (users table is currently empty in your dump)
+# Create the initial admin operator account:
 python seed_admin.py admin YourStrongPassword123
 
+# Run development server:
 uvicorn app.main:app --reload --port 8000
 ```
 
-API docs: http://localhost:8000/docs
+- **Interactive API Documentation (Swagger)**: http://localhost:8000/docs
+- **ReDoc**: http://localhost:8000/redoc
 
-Endpoints:
-- `POST /auth/login` (form: username, password) → JWT
-- `GET /auth/me`
-- `GET /vehicles` — filters: `vehicle_type`, `license_plate`, `min_speed`, `max_speed`, `overspeed_only`, `date_from`, `date_to`, `page`, `page_size`
-- `GET /vehicles/{id}`, `PATCH /vehicles/{id}`, `DELETE /vehicles/{id}`
-- `POST /vehicles` — multipart form (vehicle_type, license_plate_text, license_plate_raw_ocr, speed, screenshot file, license_plate_image file) — this is the endpoint your OCR pipeline / camera script should call to insert a new capture.
-- `GET /vehicles/stats` — totals + overspeed count (limit set by `SPEED_LIMIT_KMH` in `.env`)
-- `WS /vehicles/ws/live?token=<jwt>` — pushes new rows as they're inserted (2s poll internally)
-- `GET/POST/PATCH/DELETE /users` — admin only
+### Key Endpoints:
+- `POST /auth/login` — Authenticate operator credentials → returns JWT access token
+- `GET /auth/me` — Retrieve active operator profile and permission role
+- `GET /vehicles` — Filtered vehicle telemetry (`vehicle_type`, `license_plate`, `min_speed`, `max_speed`, `overspeed_only`, `date_from`, `date_to`, `page`, `page_size`)
+- `GET /vehicles/{id}`, `PATCH /vehicles/{id}`, `DELETE /vehicles/{id}` — Inspection and management of capture records
+- `POST /vehicles` — Multipart ingest endpoint for OCR cameras/scripts (vehicle type, license plate text, raw OCR, velocity, full-frame screenshot, cropped plate image)
+- `GET /vehicles/stats` — Real-time telemetry summaries, daily totals, and speed violation count
+- `WS /vehicles/ws/live?token=<jwt>` — Real-time WebSocket feed pushing newly ingested captures instantly
+- `GET/POST/PATCH/DELETE /users` — Administrator user management
 
-Uploaded images are stored under `backend/media/` and served at `/media/...`.
+*Uploaded media captures are securely stored under `backend/media/` and served at `/media/...`.*
 
-## 2. Frontend setup
+---
+
+## 2. Frontend Setup
 
 ```bash
 cd frontend
 npm install
-cp .env.example .env   # set VITE_API_BASE if backend isn't on localhost:8000
+cp .env.example .env   # Set VITE_API_BASE if backend is not on localhost:8000
 npm run dev
 ```
 
-Open http://localhost:5173, sign in with the admin user you seeded.
+Open [http://localhost:5173](http://localhost:5173) in your browser and sign in using your seeded operator credentials.
 
-## 3. Roles
+### Production Build:
+```bash
+npm --prefix frontend run build
+```
+Generates an optimized, code-split production bundle in `frontend/dist/`.
 
-- **admin** — everything, including the Users screen
-- **operator** — dashboard, live feed, edit/delete captures
-- **viewer** — read-only dashboard + live feed
+---
 
-(Role is just a string column — enforcement is currently admin-only-gated for the Users screen; extend `require_admin`/checks in `backend/app/deps.py` if you want stricter per-role rules.)
+## 3. Role-Based Access Control (RBAC)
 
-## 4. Connecting your OCR pipeline
+| Role | Permissions |
+| :--- | :--- |
+| **Admin** | Full system control: User management, camera node setup, speed zone calibration, and telemetry management. |
+| **Operator** | Telemetry inspection, live surveillance feeds, capture editing, export, and search. |
+| **Viewer** | Read-only access to dashboard statistics, telemetry search, and live camera streams. |
 
-Whatever script currently writes rows into `vehicle_data`, point it at `POST /vehicles` instead of
-(or in addition to) direct SQL — it'll get you validation, image storage under `media/`, and the
-live feed will pick up the new row automatically within ~2 seconds.
+---
 
+## 4. Connecting Your Camera & OCR Pipeline
 
-# Until brach gate_dev4.1 is without redis and one rtsp url only
+Any external detection script, camera node, or edge inference device (e.g. YOLO + PaddleOCR / EasyOCR) should send multipart POST requests to `/vehicles`:
 
-# Branch gate_dev5 is redis with multiple rtsp url work 
+```python
+import requests
+
+url = "http://localhost:8000/vehicles"
+payload = {
+    "vehicle_type": "Car",
+    "license_plate_text": "MH12EQ8810",
+    "license_plate_raw_ocr": "MH 12 EQ 8810",
+    "speed": 118.4,
+}
+files = {
+    "screenshot": open("frame_capture.jpg", "rb"),
+    "license_plate_image": open("plate_crop.jpg", "rb"),
+}
+
+response = requests.post(url, data=payload, files=files)
+print(response.json())
+```
+The console immediately ingests the detection, triggers compliance evaluation, and broadcasts the event over WebSocket to all active operator consoles.
+
+---
+
+## 5. Deployment Branches
+
+- **`gate_dev4.1`**: Single RTSP stream deployment without Redis dependency.
+- **`gate_dev5`**: Multi-camera RTSP ingestion cluster powered by Redis message broker and distributed pipeline workers.
