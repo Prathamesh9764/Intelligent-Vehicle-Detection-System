@@ -1,7 +1,6 @@
 export default function PlateBadge({
   text,
   size = "md",
-  countryCode = "IND",
   onClick,
   className = "",
 }) {
@@ -9,10 +8,10 @@ export default function PlateBadge({
   const displayText = isAvailable ? text.trim().toUpperCase() : "NO PLATE";
 
   const sizeClasses = {
-    sm: "text-[10px] px-1.5 py-0.5 gap-1 tracking-wider",
-    md: "text-xs px-2 py-0.5 gap-1.5 tracking-widest",
-    lg: "text-sm px-3 py-1 gap-2 tracking-widest",
-  }[size] || "text-xs px-2 py-0.5 gap-1.5 tracking-widest";
+    sm: "text-[10px] px-2 py-0.5 tracking-wider",
+    md: "text-xs px-2.5 py-0.5 tracking-widest",
+    lg: "text-sm px-3.5 py-1 tracking-widest",
+  }[size] || "text-xs px-2.5 py-0.5 tracking-widest";
 
   const Component = onClick ? "button" : "div";
 
@@ -21,7 +20,7 @@ export default function PlateBadge({
       onClick={onClick}
       type={onClick ? "button" : undefined}
       className={`
-        inline-flex items-center font-mono font-bold select-none rounded border shadow-sm
+        inline-flex items-center justify-center font-mono font-bold select-none rounded border shadow-sm
         transition-all duration-150
         ${
           isAvailable
@@ -34,11 +33,6 @@ export default function PlateBadge({
       `}
       title={isAvailable ? `License Plate: ${displayText}` : "License plate unreadable"}
     >
-      {isAvailable && (
-        <span className="flex items-center justify-center font-sans font-bold text-[8px] px-0.5 rounded-sm bg-blue-700 text-white tracking-normal leading-tight">
-          {countryCode}
-        </span>
-      )}
       <span className="truncate">{displayText}</span>
     </Component>
   );

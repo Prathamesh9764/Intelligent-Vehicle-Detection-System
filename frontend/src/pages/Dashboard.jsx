@@ -12,6 +12,7 @@ import {
   Image,
   SlidersHorizontal,
   ChevronDown,
+  ChevronUp,
   ArrowRight,
   X,
   Search,
@@ -311,145 +312,151 @@ export default function Dashboard() {
 
         {/* Filter Controls Card */}
         <div className="glass-card top-accent-bar overflow-hidden shadow-sm border border-slate-200/90 dark:border-cyan-500/20">
-          {/* Mobile collapsible toggle */}
+          {/* Collapsible Filter Header (Expand / Collapse on all devices) */}
           <button
             type="button"
             onClick={() => setFiltersOpen((o) => !o)}
-            className="w-full flex items-center justify-between gap-2 px-3.5 py-2.5 sm:hidden active:bg-slate-100/50 dark:active:bg-white/5"
+            className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-2.5 sm:py-3 cursor-pointer hover:bg-slate-50/80 dark:hover:bg-cyan-500/5 active:bg-slate-100/50 dark:active:bg-white/5 transition-colors select-none text-left"
+            aria-expanded={filtersOpen}
+            aria-label={filtersOpen ? "Collapse filter controls" : "Expand filter controls"}
           >
-            <span className="flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-slate-100">
-              <SlidersHorizontal size={14} className="text-cyan-500" />
-              <span>Filter Telemetry</span>
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="w-7 h-7 rounded-lg bg-blue-500/10 dark:bg-cyan-500/10 border border-blue-500/20 dark:border-cyan-500/20 text-blue-600 dark:text-cyan-400 flex items-center justify-center shrink-0">
+                <SlidersHorizontal size={14} />
+              </div>
+              <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-slate-100 tracking-tight">
+                Filter Telemetry
+              </span>
               {activeFilterCount > 0 && (
-                <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-cyan-500 text-slate-950 text-[10px] font-bold">
-                  {activeFilterCount}
+                <span className="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-cyan-500/15 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30 text-[10px] font-mono font-bold">
+                  {activeFilterCount} active
                 </span>
               )}
-            </span>
-            <ChevronDown
-              size={15}
-              className={`text-slate-400 transition-transform duration-200 ${
-                filtersOpen ? "rotate-180" : ""
-              }`}
-            />
+            </div>
+
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400">
+              <span className="text-[11px] sm:text-xs">
+                {filtersOpen ? "Collapse Filters" : "Expand Filters"}
+              </span>
+              {filtersOpen ? (
+                <ChevronUp size={16} className="text-cyan-500 transition-transform" />
+              ) : (
+                <ChevronDown size={16} className="text-slate-400 transition-transform" />
+              )}
+            </div>
           </button>
 
-          {/* Form fields */}
-          <div
-            className={`${
-              filtersOpen ? "block" : "hidden"
-            } sm:block p-3.5 sm:p-4 ${
-              filtersOpen ? "border-t border-slate-200/80 dark:border-cyan-500/15 sm:border-t-0" : ""
-            }`}
-          >
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-2.5 sm:gap-3 items-end">
-              {/* Camera Filter */}
-              <div className="lg:col-span-2">
-                <Field label="Camera">
-                  <ConfigProvider theme={antdTheme}>
-                    <Select
-                      value={filters.camera_id || undefined}
-                      placeholder="All Cameras"
-                      onChange={(v) => setFilters((f) => ({ ...f, camera_id: v || "" }))}
-                      allowClear
-                      className="w-full"
-                      options={[
-                        { value: "", label: "All Cameras" },
-                        ...cameras.map((c) => ({ value: c.id, label: c.name })),
-                      ]}
-                    />
-                  </ConfigProvider>
-                </Field>
-              </div>
+          {/* Form fields (collapsible across all screens) */}
+          {filtersOpen && (
+            <div className="p-3.5 sm:p-4 border-t border-slate-200/80 dark:border-cyan-500/15 animate-rise">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-3.5 items-end">
+                {/* Camera Filter */}
+                <div>
+                  <Field label="Camera">
+                    <ConfigProvider theme={antdTheme}>
+                      <Select
+                        value={filters.camera_id || undefined}
+                        placeholder="All Cameras"
+                        onChange={(v) => setFilters((f) => ({ ...f, camera_id: v || "" }))}
+                        allowClear
+                        className="w-full"
+                        options={[
+                          { value: "", label: "All Cameras" },
+                          ...cameras.map((c) => ({ value: c.id, label: c.name })),
+                        ]}
+                      />
+                    </ConfigProvider>
+                  </Field>
+                </div>
 
-              {/* Vehicle Type Filter */}
-              <div className="lg:col-span-2">
-                <Field label="Vehicle Type">
-                  <ConfigProvider theme={antdTheme}>
-                    <Select
-                      value={filters.vehicle_type || undefined}
-                      placeholder="All Types"
-                      onChange={(v) => setFilters((f) => ({ ...f, vehicle_type: v || "" }))}
-                      allowClear
-                      className="w-full"
-                      options={[
-                        { value: "", label: "All Types" },
-                        ...vehicleTypes.map((t) => ({ value: t, label: t })),
-                      ]}
-                    />
-                  </ConfigProvider>
-                </Field>
-              </div>
+                {/* Vehicle Type Filter */}
+                <div>
+                  <Field label="Vehicle Type">
+                    <ConfigProvider theme={antdTheme}>
+                      <Select
+                        value={filters.vehicle_type || undefined}
+                        placeholder="All Types"
+                        onChange={(v) => setFilters((f) => ({ ...f, vehicle_type: v || "" }))}
+                        allowClear
+                        className="w-full"
+                        options={[
+                          { value: "", label: "All Types" },
+                          ...vehicleTypes.map((t) => ({ value: t, label: t })),
+                        ]}
+                      />
+                    </ConfigProvider>
+                  </Field>
+                </div>
 
-              {/* License Plate Search */}
-              <div className="lg:col-span-2">
-                <Field label="License Plate">
-                  <div className="relative flex items-center">
-                    <Search
-                      size={13}
-                      className="absolute left-2.5 text-slate-400 pointer-events-none"
-                    />
-                    <input
-                      type="text"
-                      value={filters.license_plate}
-                      onChange={(e) => setFilters((f) => ({ ...f, license_plate: e.target.value }))}
-                      placeholder="Search plate…"
-                      className="input w-full pl-7 pr-7 text-xs font-mono"
-                    />
-                    {filters.license_plate && (
-                      <button
-                        type="button"
-                        onClick={() => setFilters((f) => ({ ...f, license_plate: "" }))}
-                        className="absolute right-2 text-slate-400 hover:text-slate-700 dark:hover:text-white transition-colors"
-                        title="Clear license plate search"
-                      >
-                        <X size={13} />
-                      </button>
-                    )}
-                  </div>
-                </Field>
-              </div>
+                {/* License Plate Search (Flex container prevents icon/placeholder collision) */}
+                <div>
+                  <Field label="License Plate">
+                    <div className="flex items-center w-full rounded-xl bg-white dark:bg-[#0e1626]/85 border border-slate-300 dark:border-cyan-500/20 px-2.5 py-1.5 focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-cyan-500/20 transition-all shadow-sm">
+                      <Search
+                        size={14}
+                        className="text-slate-400 dark:text-cyan-400 shrink-0 mr-2 pointer-events-none"
+                      />
+                      <input
+                        type="text"
+                        value={filters.license_plate}
+                        onChange={(e) => setFilters((f) => ({ ...f, license_plate: e.target.value }))}
+                        placeholder="Search plate…"
+                        className="w-full bg-transparent text-xs font-mono text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 outline-none font-medium"
+                      />
+                      {filters.license_plate && (
+                        <button
+                          type="button"
+                          onClick={() => setFilters((f) => ({ ...f, license_plate: "" }))}
+                          className="text-slate-400 hover:text-slate-700 dark:hover:text-white transition-colors ml-1 p-0.5 cursor-pointer"
+                          title="Clear license plate search"
+                        >
+                          <X size={13} />
+                        </button>
+                      )}
+                    </div>
+                  </Field>
+                </div>
 
-              {/* Date From */}
-              <div className="sm:col-span-2 lg:col-span-2">
-                <SplitDateTime
-                  value={filters.date_from}
-                  onChange={(v) => setFilters((f) => ({ ...f, date_from: v }))}
-                  dateLabel="Start Date"
-                  timeLabel="Time"
-                  defaultTime="00:00"
-                />
-              </div>
+                {/* Date From */}
+                <div>
+                  <SplitDateTime
+                    value={filters.date_from}
+                    onChange={(v) => setFilters((f) => ({ ...f, date_from: v }))}
+                    dateLabel="Start Date"
+                    timeLabel="Time"
+                    defaultTime="00:00"
+                  />
+                </div>
 
-              {/* Date To */}
-              <div className="sm:col-span-2 lg:col-span-2">
-                <SplitDateTime
-                  value={filters.date_to}
-                  onChange={(v) => setFilters((f) => ({ ...f, date_to: v }))}
-                  dateLabel="End Date"
-                  timeLabel="Time"
-                  defaultTime="23:59"
-                />
-              </div>
+                {/* Date To */}
+                <div>
+                  <SplitDateTime
+                    value={filters.date_to}
+                    onChange={(v) => setFilters((f) => ({ ...f, date_to: v }))}
+                    dateLabel="End Date"
+                    timeLabel="Time"
+                    defaultTime="23:59"
+                  />
+                </div>
 
-              {/* Speed Range Filter */}
-              <div className="lg:col-span-2">
-                <Field label="Speed Range">
-                  <ConfigProvider theme={antdTheme}>
-                    <Select
-                      value={filters.speed_range || undefined}
-                      placeholder="All Speeds"
-                      onChange={(v) => setFilters((f) => ({ ...f, speed_range: v || "" }))}
-                      allowClear
-                      className="w-full"
-                      options={SPEED_RANGES.map((r) => ({ value: r.value, label: r.label }))}
-                    />
-                  </ConfigProvider>
-                </Field>
-              </div>
+                {/* Speed Range Filter */}
+                <div>
+                  <Field label="Speed Range">
+                    <ConfigProvider theme={antdTheme}>
+                      <Select
+                        value={filters.speed_range || undefined}
+                        placeholder="All Speeds"
+                        onChange={(v) => setFilters((f) => ({ ...f, speed_range: v || "" }))}
+                        allowClear
+                        className="w-full"
+                        options={SPEED_RANGES.map((r) => ({ value: r.value, label: r.label }))}
+                      />
+                    </ConfigProvider>
+                  </Field>
+                </div>
 
-              {/* Action Buttons */}
-              <div className="sm:col-span-2 lg:col-span-12 flex items-center gap-2 pt-1.5 border-t border-slate-200/80 dark:border-cyan-500/15">
+                {/* Action Buttons */}
+                <div className="col-span-1 sm:col-span-2 lg:col-span-3 flex items-center gap-2 pt-2 border-t border-slate-200/80 dark:border-cyan-500/15">
                 <button
                   type="button"
                   onClick={applyFilters}
@@ -476,7 +483,8 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
-        </div>
+        )}
+      </div>
 
         {/* Telemetry Results Section */}
         <div className="glass-card overflow-hidden shadow-md border border-slate-200/90 dark:border-cyan-500/20">

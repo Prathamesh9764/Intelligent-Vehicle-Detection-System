@@ -34,6 +34,18 @@ export default function Layout({ children }) {
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [showSignOutDialog, setShowSignOutDialog] = useState(false);
+
+  useEffect(() => {
+    if (!showSignOutDialog) return;
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setShowSignOutDialog(false);
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [showSignOutDialog]);
 
   useEffect(() => {
     if (!location.pathname.startsWith("/vehicles/")) {
@@ -219,11 +231,8 @@ export default function Layout({ children }) {
 
             {/* Sign-out button */}
             <button
-              onClick={() => {
-                logout();
-                navigate("/login");
-              }}
-              className="flex items-center gap-1 text-xs text-slate-500 hover:text-red-600 dark:text-slate-400 dark:hover:text-rose-400 transition-colors font-semibold p-1.5 sm:px-2 sm:py-1 rounded-lg border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-white/5 hover:border-red-500/30"
+              onClick={() => setShowSignOutDialog(true)}
+              className="flex items-center gap-1 text-xs text-slate-500 hover:text-red-600 dark:text-slate-400 dark:hover:text-rose-400 transition-colors font-semibold p-1.5 sm:px-2 sm:py-1 rounded-lg border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-white/5 hover:border-red-500/30 cursor-pointer"
               title="Sign out of console"
               aria-label="Sign out"
             >
@@ -240,6 +249,69 @@ export default function Layout({ children }) {
           </div>
         </div>
       </main>
+
+      {/* Sign Out Confirmation Dialog */}
+      {showSignOutDialog && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4 animate-rise"
+          onClick={() => setShowSignOutDialog(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="signout-dialog-title"
+        >
+          <div
+            className="relative w-full max-w-sm glass-card p-5 sm:p-6 shadow-2xl border border-slate-200/90 dark:border-cyan-500/25 rounded-2xl bg-white dark:bg-[#0b1220]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start gap-3.5">
+              <div className="w-10 h-10 rounded-xl bg-rose-500/10 dark:bg-rose-500/15 border border-rose-500/30 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0">
+                <LogOut size={20} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3
+                  id="signout-dialog-title"
+                  className="text-base font-bold text-slate-900 dark:text-white font-display"
+                >
+                  Confirm Sign Out
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1">
+                  Are you sure you want to sign out?
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowSignOutDialog(false)}
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 rounded-lg transition-colors -mr-1 -mt-1 cursor-pointer"
+                aria-label="Close dialog"
+              >
+                <X size={16} />
+              </button>
+            </div>
+
+            <div className="flex items-center justify-end gap-2.5 mt-6 pt-3 border-t border-slate-200/80 dark:border-white/10">
+              <button
+                type="button"
+                onClick={() => setShowSignOutDialog(false)}
+                className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-300 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/5 transition-all active:scale-95 cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowSignOutDialog(false);
+                  logout();
+                  navigate("/login");
+                }}
+                className="px-4 py-1.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 shadow-md shadow-rose-500/25 hover:shadow-lg transition-all active:scale-95 cursor-pointer flex items-center gap-1.5"
+              >
+                <LogOut size={13} />
+                <span>Confirm Sign Out</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
