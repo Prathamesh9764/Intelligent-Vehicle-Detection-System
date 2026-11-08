@@ -6,17 +6,8 @@
 
 ## System Demonstration
 
-Watch the system in action below:
-
 <div align="center">
-  <video src="frontend/public/demo_speed_ocr.mp4" controls="controls" width="100%" style="max-height: 540px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
-    Your browser does not support the video tag.
-  </video>
-  <p align="center">
-    <a href="frontend/public/demo_speed_ocr.mp4">
-      <b>▶ Click here to view / download the demo video (demo_speed_ocr.mp4)</b>
-    </a>
-  </p>
+  <img src="frontend/public/basic_preview.gif" alt="Intelligent-Vehicle-Detection-System Live Demonstration" width="100%" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.35);" />
 </div>
 
 ---
@@ -123,9 +114,3 @@ print(response.json())
 ```
 The console immediately ingests the detection, triggers compliance evaluation, and broadcasts the event over WebSocket to all active operator consoles.
 
----
-
-## 5. Deployment Branches
-
-- **`gate_dev4.1`**: Single RTSP stream deployment without Redis dependency.
-- **`gate_dev5`**: Multi-camera RTSP ingestion cluster powered by Redis message broker and distributed pipeline workers.
