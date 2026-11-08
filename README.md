@@ -7,14 +7,7 @@
 ## System Demonstration
 
 <div align="center">
-  <a href="frontend/public/demo_speed_ocr.mp4">
-    <img src="frontend/public/demo_preview.gif" alt="Intelligent-Vehicle-Detection-System Live Demonstration" width="100%" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.35);" />
-  </a>
-  <p align="center">
-    <a href="frontend/public/demo_speed_ocr.mp4">
-      <b>▶ Click the animation above to view / download the full 1080p demo video (demo_speed_ocr.mp4)</b>
-    </a>
-  </p>
+  <img src="frontend/public/basic_preview.gif" alt="Intelligent-Vehicle-Detection-System Live Demonstration" width="100%" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.35);" />
 </div>
 
 ---
