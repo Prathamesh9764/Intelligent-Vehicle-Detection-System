@@ -303,7 +303,7 @@ export default function ZoneManager() {
       <div className="flex items-center justify-between">
         <button
           onClick={() => navigate("/live")}
-          className="inline-flex items-center gap-1.5 text-slate-500 hover:text-cyan-500 text-xs font-bold transition-colors py-1"
+          className="inline-flex items-center gap-1.5 text-slate-600 hover:text-blue-600 dark:text-slate-400 dark:hover:text-cyan-400 text-xs font-bold transition-colors py-1"
         >
           <ArrowLeft size={15} /> Return to Live Streams
         </button>
@@ -311,7 +311,7 @@ export default function ZoneManager() {
         <button
           onClick={captureSnapshot}
           disabled={loadingSnapshot}
-          className="text-xs flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-white/10 hover:border-cyan-500/40 text-slate-600 dark:text-slate-300 font-semibold"
+          className="text-xs flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-white/10 hover:border-blue-500/40 dark:hover:border-cyan-500/40 text-slate-700 dark:text-slate-300 font-semibold bg-white dark:bg-transparent"
           title="Refresh background video snapshot"
         >
           <RefreshCw size={13} className={loadingSnapshot ? "animate-spin" : ""} />
@@ -598,7 +598,7 @@ export default function ZoneManager() {
 
             {/* Configuration Items List */}
             <div className="space-y-2 pt-1">
-              <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+              <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
                 <MapPin size={12} className="text-cyan-500" />
                 <span>Zone Layers</span>
               </div>
@@ -608,7 +608,7 @@ export default function ZoneManager() {
                 className={`p-2.5 rounded-xl border transition-all ${
                   roiPoints.length >= 3
                     ? "bg-teal-500/10 border-teal-500/30 text-teal-800 dark:text-teal-200"
-                    : "bg-slate-100/50 dark:bg-white/[0.02] border-slate-200 dark:border-white/10 text-slate-400"
+                    : "bg-slate-100 dark:bg-white/[0.02] border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400"
                 }`}
               >
                 <div className="flex items-center justify-between">
@@ -641,7 +641,7 @@ export default function ZoneManager() {
                 className={`p-2.5 rounded-xl border transition-all ${
                   gate0 && gate0.length === 2
                     ? "bg-blue-500/10 border-blue-500/30 text-blue-800 dark:text-cyan-200"
-                    : "bg-slate-100/50 dark:bg-white/[0.02] border-slate-200 dark:border-white/10 text-slate-400"
+                    : "bg-slate-100 dark:bg-white/[0.02] border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400"
                 }`}
               >
                 <span className="text-xs font-bold block">2. Gate 0 (Entry Line)</span>
@@ -659,7 +659,7 @@ export default function ZoneManager() {
                 className={`p-2.5 rounded-xl border transition-all ${
                   gate1 && gate1.length === 2
                     ? "bg-rose-500/10 border-rose-500/30 text-rose-800 dark:text-rose-200"
-                    : "bg-slate-100/50 dark:bg-white/[0.02] border-slate-200 dark:border-white/10 text-slate-400"
+                    : "bg-slate-100 dark:bg-white/[0.02] border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400"
                 }`}
               >
                 <span className="text-xs font-bold block">3. Gate 1 (Exit Line)</span>
@@ -673,8 +673,8 @@ export default function ZoneManager() {
               </div>
 
               {/* Gate Distance Input */}
-              <div className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/50 dark:bg-white/[0.02] space-y-1.5">
-                <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200">
+              <div className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.02] space-y-1.5">
+                <label className="block text-[11px] font-bold text-slate-800 dark:text-slate-200">
                   4. Distance Between Gates (m)
                 </label>
                 <div className="flex items-center gap-2">
@@ -689,7 +689,7 @@ export default function ZoneManager() {
                     disabled={!gate0 || !gate1}
                     className="input w-full font-mono font-bold text-xs !py-1"
                   />
-                  <span className="text-xs font-bold text-slate-500">meters</span>
+                  <span className="text-xs font-bold text-slate-600 dark:text-slate-400">meters</span>
                 </div>
               </div>
             </div>

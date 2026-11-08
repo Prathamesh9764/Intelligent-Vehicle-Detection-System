@@ -37,7 +37,7 @@ export default function ThemeSwitcher({ size = "md", showLabels = false, classNa
               ${
                 isSelected
                   ? "bg-blue-600 text-white dark:bg-cyan-500/20 dark:text-cyan-300 shadow-sm border border-blue-500 dark:border-cyan-400/40 font-bold"
-                  : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-white/40 dark:hover:bg-white/5 border border-transparent"
+                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-white/60 dark:hover:bg-white/5 border border-transparent"
               }
             `}
           >

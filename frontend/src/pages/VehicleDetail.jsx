@@ -165,7 +165,7 @@ export default function VehicleDetail() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
           <div className="space-y-1">
-            <label className="block text-[11px] uppercase tracking-wider text-slate-600 dark:text-slate-300 font-bold">
+            <label className="block text-[11px] uppercase tracking-wider text-slate-700 dark:text-slate-300 font-bold">
               Vehicle Classification
             </label>
             <input
@@ -179,7 +179,7 @@ export default function VehicleDetail() {
           </div>
 
           <div className="space-y-1">
-            <label className="block text-[11px] uppercase tracking-wider text-slate-600 dark:text-slate-300 font-bold">
+            <label className="block text-[11px] uppercase tracking-wider text-slate-700 dark:text-slate-300 font-bold">
               Calculated Velocity (km/h)
             </label>
             <input
@@ -195,7 +195,7 @@ export default function VehicleDetail() {
           </div>
 
           <div className="space-y-1">
-            <label className="block text-[11px] uppercase tracking-wider text-slate-600 dark:text-slate-300 font-bold">
+            <label className="block text-[11px] uppercase tracking-wider text-slate-700 dark:text-slate-300 font-bold">
               Verified License Plate
             </label>
             <input
@@ -216,17 +216,17 @@ export default function VehicleDetail() {
 
           {v.license_plate_raw_ocr && (
             <div className="space-y-1">
-              <label className="block text-[11px] uppercase tracking-wider text-slate-600 dark:text-slate-300 font-bold">
+              <label className="block text-[11px] uppercase tracking-wider text-slate-700 dark:text-slate-300 font-bold">
                 Raw Neural OCR String
               </label>
-              <div className="input w-full font-mono uppercase tracking-wider select-all text-xs bg-slate-100/70 dark:bg-black/30 font-semibold flex items-center !py-1">
+              <div className="input w-full font-mono uppercase tracking-wider select-all text-xs bg-slate-100 dark:bg-black/30 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-white/10 font-semibold flex items-center !py-1">
                 {v.license_plate_raw_ocr}
               </div>
             </div>
           )}
 
           <div className="space-y-1">
-            <label className="block text-[11px] uppercase tracking-wider text-slate-600 dark:text-slate-300 font-bold">
+            <label className="block text-[11px] uppercase tracking-wider text-slate-700 dark:text-slate-300 font-bold">
               Camera Node
             </label>
             <div className="flex items-center gap-1.5 text-slate-900 dark:text-slate-100 text-xs font-semibold py-1">
@@ -236,7 +236,7 @@ export default function VehicleDetail() {
           </div>
 
           <div className="space-y-1">
-            <label className="block text-[11px] uppercase tracking-wider text-slate-600 dark:text-slate-300 font-bold">
+            <label className="block text-[11px] uppercase tracking-wider text-slate-700 dark:text-slate-300 font-bold">
               Capture Timestamp
             </label>
             <div className="flex items-center gap-1.5 text-slate-900 dark:text-slate-100 text-xs font-mono py-1">
@@ -293,7 +293,7 @@ export default function VehicleDetail() {
 function ImagePanel({ title, path, onOpen }) {
   return (
     <div className="glass-card top-accent-bar overflow-hidden shadow-sm border border-slate-200/90 dark:border-cyan-500/15">
-      <div className="px-3.5 py-2 border-b border-slate-200/80 dark:border-cyan-500/15 text-[11px] uppercase tracking-wider font-bold text-slate-700 dark:text-slate-200">
+      <div className="px-3.5 py-2 border-b border-slate-200/80 dark:border-cyan-500/15 text-[11px] uppercase tracking-wider font-bold text-slate-800 dark:text-slate-200 bg-slate-50/70 dark:bg-white/[0.02]">
         {title}
       </div>
       {path ? (
@@ -308,7 +308,7 @@ function ImagePanel({ title, path, onOpen }) {
           />
         </div>
       ) : (
-        <div className="w-full h-48 flex flex-col items-center justify-center text-slate-400 gap-1.5 text-xs bg-slate-950/20">
+        <div className="w-full h-48 flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 gap-1.5 text-xs bg-slate-100/70 dark:bg-slate-950/40">
           <ImageOff size={20} className="opacity-40" />
           <span>No image stored</span>
         </div>
@@ -320,7 +320,7 @@ function ImagePanel({ title, path, onOpen }) {
 function VideoPanel({ title, path, onOpen }) {
   return (
     <div className="glass-card top-accent-bar overflow-hidden shadow-sm border border-slate-200/90 dark:border-cyan-500/15">
-      <div className="px-3.5 py-2 border-b border-slate-200/80 dark:border-cyan-500/15 text-[11px] uppercase tracking-wider font-bold text-slate-700 dark:text-slate-200">
+      <div className="px-3.5 py-2 border-b border-slate-200/80 dark:border-cyan-500/15 text-[11px] uppercase tracking-wider font-bold text-slate-800 dark:text-slate-200 bg-slate-50/70 dark:bg-white/[0.02]">
         {title}
       </div>
       {path ? (
@@ -340,7 +340,7 @@ function VideoPanel({ title, path, onOpen }) {
           />
         </div>
       ) : (
-        <div className="w-full h-48 flex flex-col items-center justify-center text-slate-400 gap-1.5 text-xs bg-slate-950/20">
+        <div className="w-full h-48 flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 gap-1.5 text-xs bg-slate-100/70 dark:bg-slate-950/40">
           <Video size={20} className="opacity-40" />
           <span>No video capture stored</span>
         </div>

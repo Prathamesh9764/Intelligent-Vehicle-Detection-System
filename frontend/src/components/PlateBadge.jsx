@@ -25,7 +25,7 @@ export default function PlateBadge({
         ${
           isAvailable
             ? "bg-gradient-to-b from-white to-slate-100 text-slate-900 border-slate-700/80 shadow-[0_1px_3px_rgba(0,0,0,0.12)]"
-            : "bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 border-dashed border-slate-300 dark:border-slate-700"
+            : "bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 border-dashed border-slate-300 dark:border-slate-700"
         }
         ${onClick ? "hover:scale-105 hover:shadow-md cursor-pointer active:scale-95 hover:border-cyan-500" : ""}
         ${sizeClasses}

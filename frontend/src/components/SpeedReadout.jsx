@@ -9,7 +9,7 @@ export default function SpeedReadout({
 }) {
   if (speed === null || speed === undefined || speed === "") {
     return (
-      <span className={`text-slate-400 dark:text-slate-500 font-mono text-xs ${className}`}>
+      <span className={`text-slate-500 dark:text-slate-400 font-mono text-xs ${className}`}>
         -- <span className="text-[10px] font-sans">km/h</span>
       </span>
     );

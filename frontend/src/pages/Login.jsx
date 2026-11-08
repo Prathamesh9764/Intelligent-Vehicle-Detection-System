@@ -418,12 +418,12 @@ export default function Login() {
       {/* ════════════════════════════════════════════════════════════════════════
           RIGHT SECTION: COMPACT, SCROLL-FREE OPERATOR CONSOLE (NO EXTRA TEXT)
           ════════════════════════════════════════════════════════════════════════ */}
-      <div className="w-full lg:w-[42%] xl:w-[38%] h-full flex flex-col justify-between px-5 py-4 sm:px-8 sm:py-6 lg:px-8 xl:px-12 lg:py-6 relative z-10 bg-white/95 dark:bg-[#090e1c]/95 backdrop-blur-xl overflow-hidden">
+      <div className="w-full lg:w-[42%] xl:w-[38%] h-full flex flex-col justify-between px-5 py-4 sm:px-8 sm:py-6 lg:px-8 xl:px-12 lg:py-6 relative z-10 bg-white dark:bg-[#090e1c] border-l border-slate-200 dark:border-transparent backdrop-blur-xl overflow-hidden">
         {/* Top Header with Theme Switcher */}
-        <div className="flex items-center justify-between pb-2 border-b border-slate-200/70 dark:border-white/10 shrink-0">
+        <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-white/10 shrink-0">
           <div className="flex items-center gap-2">
             <span className="radar-dot" />
-            <span className="text-[11px] font-mono font-bold tracking-wider uppercase text-slate-600 dark:text-cyan-400">
+            <span className="text-[11px] font-mono font-bold tracking-wider uppercase text-slate-700 dark:text-cyan-400">
               OPERATOR CONSOLE
             </span>
           </div>
@@ -437,7 +437,7 @@ export default function Login() {
             <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white font-display leading-tight">
               Sign In
             </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
               Enter your operator credentials to access enforcement console
             </p>
           </div>
@@ -452,7 +452,7 @@ export default function Login() {
               >
                 Operator ID
               </label>
-              <div className="flex items-center rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-300 dark:border-cyan-500/30 px-3 py-2.5 focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-cyan-500/20 transition-all">
+              <div className="flex items-center rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-300 dark:border-cyan-500/30 px-3 py-2.5 focus-within:border-blue-500 dark:focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-blue-500/20 dark:focus-within:ring-cyan-500/20 transition-all">
                 <User
                   size={16}
                   className="text-slate-400 dark:text-cyan-400 shrink-0 mr-2.5"
@@ -492,7 +492,7 @@ export default function Login() {
                   Demo Fill
                 </button>
               </div>
-              <div className="flex items-center rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-300 dark:border-cyan-500/30 px-3 py-2.5 focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-cyan-500/20 transition-all">
+              <div className="flex items-center rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-300 dark:border-cyan-500/30 px-3 py-2.5 focus-within:border-blue-500 dark:focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-blue-500/20 dark:focus-within:ring-cyan-500/20 transition-all">
                 <Lock
                   size={16}
                   className="text-slate-400 dark:text-cyan-400 shrink-0 mr-2.5"
@@ -556,7 +556,7 @@ export default function Login() {
         </div>
 
         {/* Minimal Subtle Footer (1 Line) */}
-        <div className="pt-2 border-t border-slate-200/70 dark:border-white/10 flex items-center justify-between text-[10px] text-slate-400 dark:text-slate-500 font-mono shrink-0">
+        <div className="pt-2 border-t border-slate-200 dark:border-white/10 flex items-center justify-between text-[10px] text-slate-500 dark:text-slate-400 font-mono shrink-0">
           <div className="flex items-center gap-1.5">
             <ShieldCheck size={12} className="text-emerald-500" />
             <span>Encrypted Session</span>

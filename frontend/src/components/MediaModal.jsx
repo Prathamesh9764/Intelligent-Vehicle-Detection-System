@@ -24,7 +24,7 @@ export default function MediaModal({ src, type = "image", title, onClose }) {
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-4xl max-h-[92vh] glass-card p-3.5 sm:p-4 shadow-2xl flex flex-col hover:transform-none border border-slate-300 dark:border-cyan-500/25"
+        className="relative w-full max-w-4xl max-h-[92vh] glass-card p-3.5 sm:p-4 shadow-2xl flex flex-col hover:transform-none border border-slate-200 dark:border-cyan-500/25 bg-white dark:bg-[#0c1424]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header bar */}

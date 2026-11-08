@@ -157,7 +157,7 @@ function ChartTooltip({ active, payload, label }) {
 
 function DailyColumnChart({ data = [], isDark }) {
   const gridColor = isDark ? "rgba(255, 255, 255, 0.08)" : "#e2e8f0";
-  const tickColor = isDark ? "#94a3b8" : "#64748b";
+  const tickColor = isDark ? "#94a3b8" : "#475569";
   return (
     <ResponsiveContainer width="100%" height={230}>
       <RBarChart
@@ -188,7 +188,7 @@ function DailyColumnChart({ data = [], isDark }) {
           allowDecimals={false}
           width={30}
         />
-        <Tooltip content={<ChartTooltip />} cursor={{ fill: isDark ? "#ffffff" : "#0f172a", opacity: 0.04 }} />
+        <Tooltip content={<ChartTooltip />} cursor={{ fill: isDark ? "#ffffff" : "#0f172a", opacity: isDark ? 0.04 : 0.05 }} />
         <Bar
           dataKey="count"
           name="Vehicles"
@@ -205,7 +205,7 @@ function DailyColumnChart({ data = [], isDark }) {
 
 function CameraBarChart({ data = [], isDark }) {
   const gridColor = isDark ? "rgba(255, 255, 255, 0.08)" : "#e2e8f0";
-  const tickColor = isDark ? "#94a3b8" : "#64748b";
+  const tickColor = isDark ? "#94a3b8" : "#475569";
   return (
     <ResponsiveContainer width="100%" height={Math.max(180, data.length * 40)}>
       <RBarChart
@@ -236,7 +236,7 @@ function CameraBarChart({ data = [], isDark }) {
           tickLine={false}
           width={100}
         />
-        <Tooltip content={<ChartTooltip />} cursor={{ fill: isDark ? "#ffffff" : "#0f172a", opacity: 0.04 }} />
+        <Tooltip content={<ChartTooltip />} cursor={{ fill: isDark ? "#ffffff" : "#0f172a", opacity: isDark ? 0.04 : 0.05 }} />
         <Bar
           dataKey="count"
           name="Vehicles"
