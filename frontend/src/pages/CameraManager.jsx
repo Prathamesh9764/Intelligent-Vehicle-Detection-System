@@ -33,7 +33,7 @@ export default function CameraManager() {
           <h1 className="font-display text-xl sm:text-2xl font-bold tracking-tight text-shimmer-blue leading-tight">
             Surveillance Camera Nodes
           </h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 font-medium">
+          <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5 font-medium">
             Configure surveillance camera endpoints, RTSP streams, and telemetry feeds
           </p>
         </div>
@@ -173,7 +173,7 @@ function CameraModal({ onClose, onCreated }) {
       <form
         onSubmit={handleSubmit}
         onClick={(e) => e.stopPropagation()}
-        className="glass-card top-accent-bar p-5 sm:p-6 w-full max-w-md space-y-4 shadow-2xl border border-slate-300 dark:border-cyan-500/25"
+        className="glass-card top-accent-bar p-5 sm:p-6 w-full max-w-md space-y-4 shadow-2xl border border-slate-200 dark:border-cyan-500/25 bg-white dark:bg-[#0c1424]"
       >
         <div className="flex items-center justify-between pb-2.5 border-b border-slate-200/80 dark:border-cyan-500/15">
           <h2 className="font-display text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
@@ -189,7 +189,7 @@ function CameraModal({ onClose, onCreated }) {
         </div>
 
         <div className="space-y-1">
-          <label className="block text-[11px] uppercase tracking-wider text-slate-600 dark:text-slate-300 font-bold">
+          <label className="block text-[11px] uppercase tracking-wider text-slate-700 dark:text-slate-300 font-bold">
             Camera Node Name
           </label>
           <input
@@ -203,7 +203,7 @@ function CameraModal({ onClose, onCreated }) {
         </div>
 
         <div className="space-y-1">
-          <label className="block text-[11px] uppercase tracking-wider text-slate-600 dark:text-slate-300 font-bold">
+          <label className="block text-[11px] uppercase tracking-wider text-slate-700 dark:text-slate-300 font-bold">
             RTSP Stream URL
           </label>
           <input
@@ -226,7 +226,7 @@ function CameraModal({ onClose, onCreated }) {
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 py-2 rounded-xl border border-slate-300 dark:border-white/10 text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-all"
+            className="flex-1 py-2 rounded-xl border border-slate-300 dark:border-white/10 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-all"
           >
             Cancel
           </button>

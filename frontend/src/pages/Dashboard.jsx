@@ -272,7 +272,7 @@ export default function Dashboard() {
             <h1 className="font-display text-xl sm:text-2xl font-bold tracking-tight text-shimmer-blue leading-tight">
               Intelligent-Vehicle-Detection-System
             </h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 font-medium">
+            <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5 font-medium">
               Real-time vehicle detection, optical speed tracking, and automated ANPR telemetry
             </p>
           </div>
@@ -281,7 +281,7 @@ export default function Dashboard() {
             <button
               onClick={exportXlsx}
               disabled={exporting || loading}
-              className="flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-xl border border-cyan-500/40 text-blue-600 dark:text-cyan-400 bg-cyan-500/5 hover:bg-cyan-500/15 hover:border-cyan-400 transition-all active:scale-95 disabled:opacity-50 font-bold"
+              className="flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-xl border border-blue-500/30 dark:border-cyan-500/40 text-blue-600 dark:text-cyan-400 bg-blue-500/5 dark:bg-cyan-500/5 hover:bg-blue-500/15 dark:hover:bg-cyan-500/15 transition-all active:scale-95 disabled:opacity-50 font-bold"
             >
               <FileDown size={14} />
               <span>{exporting ? "Exporting…" : "Export XLSX"}</span>
@@ -316,7 +316,7 @@ export default function Dashboard() {
           <button
             type="button"
             onClick={() => setFiltersOpen((o) => !o)}
-            className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-2.5 sm:py-3 cursor-pointer hover:bg-slate-50/80 dark:hover:bg-cyan-500/5 active:bg-slate-100/50 dark:active:bg-white/5 transition-colors select-none text-left"
+            className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-2.5 sm:py-3 cursor-pointer hover:bg-slate-100/70 dark:hover:bg-cyan-500/5 active:bg-slate-200/60 dark:active:bg-white/5 transition-colors select-none text-left"
             aria-expanded={filtersOpen}
             aria-label={filtersOpen ? "Collapse filter controls" : "Expand filter controls"}
           >
@@ -328,13 +328,13 @@ export default function Dashboard() {
                 Filter Telemetry
               </span>
               {activeFilterCount > 0 && (
-                <span className="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-cyan-500/15 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30 text-[10px] font-mono font-bold">
+                <span className="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-700 dark:bg-cyan-500/15 dark:text-cyan-300 border border-blue-500/20 dark:border-cyan-500/30 text-[10px] font-mono font-bold">
                   {activeFilterCount} active
                 </span>
               )}
             </div>
 
-            <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400">
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-600 dark:text-slate-400">
               <span className="text-[11px] sm:text-xs">
                 {filtersOpen ? "Collapse Filters" : "Expand Filters"}
               </span>
@@ -469,14 +469,14 @@ export default function Dashboard() {
                   <button
                     type="button"
                     onClick={resetFilters}
-                    className="flex items-center gap-1 text-slate-500 dark:text-slate-400 text-xs px-3 py-1.5 rounded-lg border border-slate-300 dark:border-white/10 hover:text-slate-900 dark:hover:text-white hover:border-slate-400 dark:hover:border-white/20 transition-all active:scale-95 font-semibold"
+                    className="flex items-center gap-1 text-slate-600 dark:text-slate-400 text-xs px-3 py-1.5 rounded-lg border border-slate-300 dark:border-white/10 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-all active:scale-95 font-semibold"
                   >
                     <RotateCcw size={12} />
                     <span>Reset</span>
                   </button>
                 )}
                 {activeFilterCount > 0 && (
-                  <span className="text-[11px] text-slate-500 dark:text-cyan-400 ml-auto font-medium">
+                  <span className="text-[11px] text-slate-600 dark:text-cyan-400 ml-auto font-medium">
                     {activeFilterCount} active filter{activeFilterCount > 1 ? "s" : ""}
                   </span>
                 )}
@@ -655,7 +655,7 @@ export default function Dashboard() {
           </div>
 
           {/* Pagination Bar (Responsive & Clean on all viewports) */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 px-3.5 py-2.5 border-t border-slate-200/80 dark:border-cyan-500/15 text-xs text-slate-500 dark:text-slate-400 bg-slate-50/60 dark:bg-white/[0.01]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 px-3.5 py-2.5 border-t border-slate-200/90 dark:border-cyan-500/15 text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-white/[0.01]">
             <span className="shrink-0 font-medium">
               Total{" "}
               <span className="text-blue-600 dark:text-cyan-400 font-bold">{total}</span>{" "}
@@ -664,11 +664,11 @@ export default function Dashboard() {
                 <>
                   {" "}
                   | Showing{" "}
-                  <span className="text-slate-800 dark:text-slate-200 font-semibold">
+                  <span className="text-slate-900 dark:text-slate-200 font-semibold">
                     {(page - 1) * pageSize + 1}
                   </span>{" "}
                   to{" "}
-                  <span className="text-slate-800 dark:text-slate-200 font-semibold">
+                  <span className="text-slate-900 dark:text-slate-200 font-semibold">
                     {Math.min(page * pageSize, total)}
                   </span>
                 </>
@@ -681,7 +681,7 @@ export default function Dashboard() {
                 <button
                   disabled={page <= 1}
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
-                  className="flex items-center justify-center w-7 h-7 rounded-lg border border-slate-300 dark:border-white/10 disabled:opacity-30 disabled:cursor-not-allowed hover:text-blue-600 dark:hover:text-cyan-400 hover:border-cyan-500/40 transition-colors active:scale-95"
+                  className="flex items-center justify-center w-7 h-7 rounded-lg border border-slate-300 dark:border-white/10 disabled:opacity-30 disabled:cursor-not-allowed hover:text-blue-600 dark:hover:text-cyan-400 hover:border-blue-500/40 dark:hover:border-cyan-500/40 transition-colors active:scale-95 text-slate-600 dark:text-slate-400 bg-white dark:bg-transparent"
                   aria-label="Previous page"
                 >
                   <ChevronLeft size={14} />
@@ -701,7 +701,7 @@ export default function Dashboard() {
                         className={`flex items-center justify-center min-w-[26px] h-7 px-1.5 rounded-lg border text-xs font-semibold transition-all active:scale-95 ${
                           n === page
                             ? "bg-blue-600 dark:bg-cyan-500 text-white dark:text-slate-950 border-blue-600 dark:border-cyan-400 shadow-sm font-bold"
-                            : "border-slate-300 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:border-cyan-500/40 hover:text-blue-600 dark:hover:text-cyan-400"
+                            : "border-slate-300 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:border-blue-500/40 dark:hover:border-cyan-500/40 hover:text-blue-600 dark:hover:text-cyan-400 bg-white dark:bg-transparent"
                         }`}
                       >
                         {n}
@@ -710,14 +710,14 @@ export default function Dashboard() {
                   )}
                 </div>
 
-                <span className="sm:hidden text-slate-800 dark:text-slate-200 font-bold px-1.5 text-xs">
+                <span className="sm:hidden text-slate-900 dark:text-slate-200 font-bold px-1.5 text-xs">
                   {page} / {totalPages}
                 </span>
 
                 <button
                   disabled={page >= totalPages}
                   onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                  className="flex items-center justify-center w-7 h-7 rounded-lg border border-slate-300 dark:border-white/10 disabled:opacity-30 disabled:cursor-not-allowed hover:text-blue-600 dark:hover:text-cyan-400 hover:border-cyan-500/40 transition-colors active:scale-95"
+                  className="flex items-center justify-center w-7 h-7 rounded-lg border border-slate-300 dark:border-white/10 disabled:opacity-30 disabled:cursor-not-allowed hover:text-blue-600 dark:hover:text-cyan-400 hover:border-blue-500/40 dark:hover:border-cyan-500/40 transition-colors active:scale-95 text-slate-600 dark:text-slate-400 bg-white dark:bg-transparent"
                   aria-label="Next page"
                 >
                   <ChevronRight size={14} />
@@ -741,7 +741,7 @@ export default function Dashboard() {
                   ))}
                 </select>
 
-                <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-medium text-slate-500 dark:text-slate-400">
+                <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-medium text-slate-600 dark:text-slate-400">
                   Go to
                   <input
                     type="text"

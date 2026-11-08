@@ -196,7 +196,7 @@ export default function Layout({ children }) {
             {/* Refresh Console Button */}
             <button
               onClick={handleRefresh}
-              className={`text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-all p-1.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-white/5 hover:border-cyan-500/40 ${
+              className={`text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-all p-1.5 rounded-lg border border-slate-300 dark:border-white/10 bg-slate-100/80 dark:bg-white/5 hover:border-cyan-500/40 ${
                 isRefreshing ? "animate-spin text-cyan-500" : ""
               }`}
               title="Refresh telemetry"
@@ -212,7 +212,7 @@ export default function Layout({ children }) {
             </div>
 
             {/* Divider */}
-            <div className="h-4 w-px bg-slate-200 dark:bg-white/10 mx-0.5" />
+            <div className="h-4 w-px bg-slate-300 dark:bg-white/10 mx-0.5" />
 
             {/* User Profile Badge */}
             <div className="flex items-center gap-1.5">
@@ -232,7 +232,7 @@ export default function Layout({ children }) {
             {/* Sign-out button */}
             <button
               onClick={() => setShowSignOutDialog(true)}
-              className="flex items-center gap-1 text-xs text-slate-500 hover:text-red-600 dark:text-slate-400 dark:hover:text-rose-400 transition-colors font-semibold p-1.5 sm:px-2 sm:py-1 rounded-lg border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-white/5 hover:border-red-500/30 cursor-pointer"
+              className="flex items-center gap-1 text-xs text-slate-600 hover:text-red-600 dark:text-slate-400 dark:hover:text-rose-400 transition-colors font-semibold p-1.5 sm:px-2 sm:py-1 rounded-lg border border-slate-300 dark:border-white/10 bg-slate-100/80 dark:bg-white/5 hover:border-red-500/30 cursor-pointer"
               title="Sign out of console"
               aria-label="Sign out"
             >

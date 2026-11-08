@@ -11,6 +11,7 @@ export const ANTD_DARK_THEME = {
     colorText: "#f8fafc",
     colorTextPlaceholder: "#94a3b8",
     colorTextHeading: "#ffffff",
+    colorTextDescription: "#94a3b8",
     borderRadius: 8,
     fontFamily: "'Outfit', 'Sora', system-ui, -apple-system, sans-serif",
   },
@@ -19,9 +20,32 @@ export const ANTD_DARK_THEME = {
       optionSelectedBg: "rgba(56, 189, 248, 0.18)",
       optionSelectedColor: "#38bdf8",
       selectorBg: "rgba(14, 22, 38, 0.8)",
+      colorBorder: "rgba(56, 189, 248, 0.2)",
+      colorText: "#f8fafc",
+      colorTextPlaceholder: "#94a3b8",
     },
     DatePicker: {
       cellActiveWithRangeBg: "rgba(56, 189, 248, 0.18)",
+      colorBorder: "rgba(56, 189, 248, 0.2)",
+      colorText: "#f8fafc",
+      colorTextPlaceholder: "#94a3b8",
+    },
+    TimePicker: {
+      colorBorder: "rgba(56, 189, 248, 0.2)",
+      colorText: "#f8fafc",
+      colorTextPlaceholder: "#94a3b8",
+    },
+    Input: {
+      colorBgContainer: "rgba(14, 22, 38, 0.85)",
+      colorBorder: "rgba(56, 189, 248, 0.2)",
+      colorText: "#f8fafc",
+      colorTextPlaceholder: "#94a3b8",
+    },
+    Table: {
+      headerBg: "rgba(14, 22, 38, 0.9)",
+      headerColor: "rgba(203, 213, 225, 0.9)",
+      rowHoverBg: "rgba(56, 189, 248, 0.04)",
+      borderColor: "rgba(255, 255, 255, 0.06)",
     },
     Button: {
       borderRadius: 8,
@@ -40,6 +64,7 @@ export const ANTD_LIGHT_THEME = {
     colorText: "#0f172a", // High contrast Slate 900
     colorTextPlaceholder: "#64748b",
     colorTextHeading: "#0f172a",
+    colorTextDescription: "#475569",
     borderRadius: 8,
     fontFamily: "'Outfit', 'Sora', system-ui, -apple-system, sans-serif",
   },
@@ -48,9 +73,32 @@ export const ANTD_LIGHT_THEME = {
       optionSelectedBg: "#eff6ff", // Blue 50
       optionSelectedColor: "#1d4ed8", // Blue 700
       selectorBg: "#ffffff",
+      colorBorder: "#cbd5e1",
+      colorText: "#0f172a",
+      colorTextPlaceholder: "#64748b",
     },
     DatePicker: {
       cellActiveWithRangeBg: "#eff6ff",
+      colorBorder: "#cbd5e1",
+      colorText: "#0f172a",
+      colorTextPlaceholder: "#64748b",
+    },
+    TimePicker: {
+      colorBorder: "#cbd5e1",
+      colorText: "#0f172a",
+      colorTextPlaceholder: "#64748b",
+    },
+    Input: {
+      colorBgContainer: "#ffffff",
+      colorBorder: "#cbd5e1",
+      colorText: "#0f172a",
+      colorTextPlaceholder: "#64748b",
+    },
+    Table: {
+      headerBg: "#f1f5f9",
+      headerColor: "#334155",
+      rowHoverBg: "#f8fafc",
+      borderColor: "#e2e8f0",
     },
     Button: {
       borderRadius: 8,

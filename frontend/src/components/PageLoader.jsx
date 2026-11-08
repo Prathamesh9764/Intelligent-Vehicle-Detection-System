@@ -37,7 +37,7 @@ export default function PageLoader({ text = "Loading Console Data…" }) {
               }}
             />
           </div>
-          <span className="text-[10px] font-mono text-slate-400 dark:text-cyan-400/80">
+          <span className="text-[10px] font-mono text-slate-500 dark:text-cyan-400/80">
             IVDS • NEURAL TELEMETRY STREAM
           </span>
         </div>

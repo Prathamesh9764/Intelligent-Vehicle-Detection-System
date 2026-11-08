@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ThemeProvider } from "./context/ThemeContext";
+import { ConfigProvider } from "antd";
+import { ThemeProvider, useTheme } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./components/Layout";
@@ -18,9 +19,11 @@ const Admin = lazy(() => import("./pages/Admin"));
 const Analysis = lazy(() => import("./pages/Analysis"));
 const CameraManager = lazy(() => import("./pages/CameraManager"));
 
-export default function App() {
+function AppContent() {
+  const { antdTheme } = useTheme();
+
   return (
-    <ThemeProvider>
+    <ConfigProvider theme={antdTheme}>
       <AuthProvider>
         <BrowserRouter>
           {/* Top route transition progress bar */}
@@ -105,6 +108,14 @@ export default function App() {
           </Suspense>
         </BrowserRouter>
       </AuthProvider>
+    </ConfigProvider>
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
     </ThemeProvider>
   );
 }

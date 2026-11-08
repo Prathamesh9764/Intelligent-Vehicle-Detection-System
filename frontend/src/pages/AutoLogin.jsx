@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ScanLine, Loader2 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
 import client from "../api/client";
 import { DASHBOARD_KEEP_FLAG } from "../utils/filterStorage";
 
@@ -63,16 +64,22 @@ export default function AutoLogin() {
     };
   }, [navigate, signIn]);
 
+  const { isDark } = useTheme();
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#080c16] text-white p-4">
+    <div
+      className={`min-h-screen flex flex-col items-center justify-center p-4 transition-colors ${
+        isDark ? "bg-[#080c16] text-white" : "bg-[#f8fafc] text-slate-900"
+      }`}
+    >
       <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/25 mb-3.5 animate-pulse">
         <ScanLine className="text-white" size={24} />
       </div>
       <p className="font-display text-base font-bold text-shimmer-blue tracking-wide mb-1.5">
         Intelligent-Vehicle-Detection-System
       </p>
-      <div className="flex items-center gap-2 text-xs text-slate-400 font-medium">
-        <Loader2 size={15} className="animate-spin text-cyan-400" />
+      <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-medium">
+        <Loader2 size={15} className="animate-spin text-blue-600 dark:text-cyan-400" />
         <span>Authenticating remote telemetry session…</span>
       </div>
     </div>
